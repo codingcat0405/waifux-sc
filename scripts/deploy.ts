@@ -9,27 +9,44 @@ async function main() {
   const [deployer] = await ethers.getSigners();
   console.log("deploy from address: ", deployer.address);
 
-  const Artwork = await ethers.getContractFactory("Artwork");
-  const artwork = await Artwork.deploy();
+  const xFishContract = await ethers.getContractFactory("xFish");
+  const xfish = await xFishContract.deploy();
+  console.log("xFish address: ", xfish.address);
 
-  const WBNB = await ethers.getContractFactory("WBNBMock");
-  const wbnb = await WBNB.deploy();
+  const fishContract = await ethers.getContractFactory("Fish");
+  const fish = await fishContract.deploy(deployer.address, xfish.address);
+  console.log("Fish address: ", fish.address);
+  //sleep 5 seconds
+  await new Promise((resolve) => setTimeout(resolve, 5000));
+  const fishingGameContract = await ethers.getContractFactory("FishingGame");
+  const fishingGame = await fishingGameContract.deploy(xfish.address, xfish.address, deployer.address);
+  console.log("FishingGame address: ", fishingGame.address);
 
-  const Marketplace = await ethers.getContractFactory("Marketplace");
-  const marketplace = await Marketplace.deploy(wbnb.address, artwork.address);
+  const fishTankContract = await ethers.getContractFactory("FishTank");
+  const fishTank = await fishTankContract.deploy(xfish.address);
+  console.log("FishTank address: ", fishTank.address);
 
-  const AuctionHouse = await ethers.getContractFactory("AuctionHouse");
-  const auctionHouse = await AuctionHouse.deploy(wbnb.address, artwork.address);
+  const stakingContract = await ethers.getContractFactory("Staking");
+  const staking = await stakingContract.deploy(xfish.address);
+  console.log("Staking address: ", staking.address);
 
-  console.log("Artwork address: ", artwork.address);
-  console.log("WBNB address: ", wbnb.address);
-  console.log("Marketplace address: ", marketplace.address);
-  console.log("AuctionHouse address: ", auctionHouse.address);
+  const tokenSaleContract = await ethers.getContractFactory("TokenSale");
+  const tokenSale = await tokenSaleContract.deploy(xfish.address, 10000, 2500);
+  console.log("TokenSale address: ", tokenSale.address);
 
-  Config.setConfig(network + ".Artwork", artwork.address);
-  Config.setConfig(network + ".WBNB", wbnb.address);
-  Config.setConfig(network + ".Marketplace", marketplace.address);
-  Config.setConfig(network + ".AuctionHouse", auctionHouse.address);
+  console.log("xFish address: ", xfish.address);
+  console.log("Fish address: ", fish.address);
+  console.log("FishingGame address: ", fishingGame.address);
+  console.log("FishTank address: ", fishTank.address);
+  console.log("Staking address: ", staking.address);
+  console.log("TokenSale address: ", tokenSale.address);
+
+  Config.setConfig(network + ".xFish", xfish.address);
+  Config.setConfig(network + ".Fish", fish.address);
+  Config.setConfig(network + ".FishingGame", fishingGame.address);
+  Config.setConfig(network + ".FishTank", fishTank.address);
+  Config.setConfig(network + ".Staking", staking.address);
+  Config.setConfig(network + ".TokenSale", tokenSale.address);
 
   await Config.updateConfig();
 }

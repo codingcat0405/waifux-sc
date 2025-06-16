@@ -1,5 +1,5 @@
 {
-  "name": "CryptoPop-contracts",
+  "name": "xfish-rework-contracts",
   "version": "0.0.1",
   "main": "index.js",
   "license": "MIT",
@@ -27,15 +27,15 @@
     "hardhat": "^2.6.8",
     "hardhat-typechain": "^0.3.5",
     "mocha": "^8.3.2",
-    "openzeppelin-solidity": "4.4.0",
     "ts-generator": "^0.1.1",
     "ts-node": "^9.1.1",
     "typechain": "^4.0.3",
     "typescript": "^4.4.4"
   },
   "dependencies": {
-    "@uniswap/v2-core": "^1.0.1",
-    "@uniswap/v2-periphery": "^1.1.0-beta.0",
-    "yarn": "^1.22.17"
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.12",
+    "@openzeppelin/contracts": "^5.0.0",
+    "dotenv": "^16.3.1",
+    "ethers": "^6.9.2"
   }
 }
